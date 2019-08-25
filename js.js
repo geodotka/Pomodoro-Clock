@@ -15,6 +15,3 @@ for (i = 0; i < $plusButtons.length; i++) {
 // -------------- timer countdown
 // 1 minuta = 60 000 milisekund
 // 1 sekunda = 1000 milisekund
-// const intervalID = window.setInterval(function, 1000)
-const clockCount = document.getElementById('wholeClock')
-    .addEventListener('click', timerOn);
