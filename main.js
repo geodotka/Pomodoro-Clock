@@ -1,11 +1,12 @@
 function main() {
+    const timer = new Timer();
     // ----------------- decrease timer by 1 minute
     const $minusButtons = document.getElementsByClassName('minus');
     for (let i = 0; i < $minusButtons.length; i++) {
         $minusButtons[i].addEventListener('click', function () {
             const $item = document.getElementById(this.id);
             const $sibling = $item.nextSibling.nextSibling; // DOMElement
-            decreaseElementNumber($sibling);
+            timer.decreaseElementNumber($sibling);
         });
     }
 
@@ -16,7 +17,7 @@ function main() {
         $plusButtons[i].addEventListener('click', function () {
             const $item = document.getElementById(this.id);
             const $sibling = $item.previousSibling.previousSibling; // DOMElement
-            increaseElementNumber($sibling);
+            timer.increaseElementNumber($sibling);
         });
     }
 
@@ -26,7 +27,9 @@ function main() {
     // 1 sekunda = 1000 milisekund
     // const intervalID = window.setInterval(function, 1000)
     // var intervalID = window.setInterval(function, 1000)
-    document.getElementById('wholeClock').addEventListener('click', timerOn);
+    document.getElementById('wholeClock').addEventListener('click', () => {
+        timer.startTimer();
+    });
 }
 
 
