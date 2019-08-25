@@ -28,7 +28,13 @@ function main() {
     // const intervalID = window.setInterval(function, 1000)
     // var intervalID = window.setInterval(function, 1000)
     document.getElementById('wholeClock').addEventListener('click', () => {
-        timer.startTimer();
+        const $breakTime = document.getElementById('breakTime');
+        const $sessionTime = document.getElementById('sessionTime');
+
+        const $ele = document.getElementById('ele');
+        $ele.textContent = 'session';
+
+        timer.startTimer($breakTime, $sessionTime);
     });
 }
 

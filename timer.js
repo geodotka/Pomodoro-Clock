@@ -1,6 +1,5 @@
 const MINIMUM_CLOCK_VALUE = 0;
 const MAXIMUM_CLOCK_VALUE = 60;
-const ONE_MINUTE_IN_MILLISECONDS = 60000;
 
 
 class Timer {
@@ -61,22 +60,19 @@ class Timer {
         }
     }
 
-    startTimer() {
-        const $breakTime = document.getElementById('breakTime');
-        const $sessionTime = document.getElementById('sessionTime');
-        const $ele = document.getElementById('ele');
-
+    startTimer($breakTime, $sessionTime) {
         const breakTime = Number($breakTime.textContent);
         const sessionTime = Number($sessionTime.textContent);
 
-        const userBreakTime = breakTime * ONE_MINUTE_IN_MILLISECONDS;
-        const userSessionTime = sessionTime * ONE_MINUTE_IN_MILLISECONDS;
+        const userBreakTime = breakTime * Timer.ONE_MINUTE_IN_MILLISECONDS;
+        const userSessionTime = sessionTime * Timer.ONE_MINUTE_IN_MILLISECONDS;
 
-        $ele.textContent = 'session';
         this.timeCounter(userSessionTime, userBreakTime);
     }
 
 }
+
+Timer.ONE_MINUTE_IN_MILLISECONDS = 60000;
 
 
 if (typeof module === 'object' && module.exports) {
