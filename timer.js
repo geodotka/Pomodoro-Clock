@@ -1,22 +1,31 @@
+const MINIMUM_CLOCK_VALUE = 0;
+const MAXIMUM_CLOCK_VALUE = 60;
+
 function minusFunc() {
-    let currentTime = Number(document.getElementById(this.id).nextSibling.nextSibling.innerText);
-    if (currentTime !== 0) {
-        currentTime -= 1;
+    const $item = document.getElementById(this.id);
+    const $sibling = $item.nextSibling.nextSibling; // DOMElement
+
+    let currentTime = Number($sibling.textContent);
+    if (currentTime === MINIMUM_CLOCK_VALUE) {
+        currentTime = MINIMUM_CLOCK_VALUE;
     } else {
-        currentTime = 0;
+        currentTime--;
     }
-    document.getElementById(document.getElementById(this.id).nextSibling.nextSibling.id).textContent = currentTime;
+    $sibling.textContent = String(currentTime);
 }
 
 
 function plusFunc() {
-    let currentTime = Number(document.getElementById(this.id).previousSibling.previousSibling.innerText);
-    if (currentTime < 60) {
-        currentTime += 1;
+    const $item = document.getElementById(this.id);
+    const $sibling = $item.previousSibling.previousSibling; // DOMElement
+
+    let currentTime = Number($sibling.textContent);
+    if (currentTime < MAXIMUM_CLOCK_VALUE) {
+        currentTime++;
     } else {
-        currentTime = 60;
+        currentTime = MAXIMUM_CLOCK_VALUE;
     }
-    document.getElementById(document.getElementById(this.id).previousSibling.previousSibling.id).textContent = currentTime;
+    $sibling.textContent = String(currentTime);
 }
 
 
