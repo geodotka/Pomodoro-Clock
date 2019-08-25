@@ -3,6 +3,12 @@ const MAXIMUM_CLOCK_VALUE = 60;
 
 
 class Timer {
+
+    constructor() {
+        this.interval = null;
+
+        this.setupResetButton();
+    }
     decreaseElementNumber($element) {
         let number = Number($element.textContent);
         if (Number.isNaN(number)) {
@@ -29,35 +35,38 @@ class Timer {
         $element.textContent = String(number);
     }
 
-    timeCounter(arg1, arg2) {
-        const sessionTime = arg1;
-        const breakTime = arg2;
-        const interval = setInterval(function () {
-            arg1 -= 1000;
-            const getDate = new Date();
-            getDate.setTime(arg1);
-            const timer = document.getElementById('timer');
-            timer.textContent = ('0' + getDate.getMinutes()).slice(-2) + ':' + ('0' + getDate.getSeconds()).slice(-2);
+    _startCounter(timeToCount, timeToCountInNextRound) {
+        let sessionTime = timeToCount;
+        const $clock = document.querySelector('#wholeClock');
 
-            if (arg1 === 0) {
-                const snd = new Audio('FreesoundOrgSynthesizedHornByDarkadders.mp3');
-                snd.play();
-                const whatIsCounted = document.getElementById('ele');
-                whatIsCounted.textContent = whatIsCounted.textContent == 'session' ? whatIsCounted.textContent = 'break' : whatIsCounted.textContent = 'session';
-                clearInterval(interval);
-                timeCounter(breakTime, sessionTime);
+        this.interval = setInterval(() => {
+            sessionTime -= Timer.ONE_SECOND;
+
+            const date = new Date(sessionTime);
+
+            this.updateTimerControl(date);
+
+            if (sessionTime === MINIMUM_CLOCK_VALUE) {
+                // document.dispatchEvent(new Event('ticktock')); or;
+                $clock.dispatchEvent(new Event('ticktock'));
+                this.toggleCountLabel();
+                clearInterval(this.interval);
+                this._startCounter(timeToCountInNextRound, timeToCount);
             }
-        }, 1000);
+        }, Timer.ONE_SECOND);
+    }
 
-        // ------ reset button
-        const resetBttn = document.getElementById('resetBttn')
-            .addEventListener('click', resetTimer);
+    setupResetButton() {
+        const $resetButton = document.getElementById('resetBttn');
+        $resetButton.addEventListener('click', () => {
+            this.resetTimer();
+        });
+    }
 
-        function resetTimer() {
-            window.clearInterval(interval);
-            document.getElementById('ele').textContent = 'click';
-            document.getElementById('timer').textContent = 'to start';
-        }
+    resetTimer() {
+        window.clearInterval(this.interval);
+        document.getElementById('ele').textContent = 'click';
+        document.getElementById('timer').textContent = 'to start';
     }
 
     startTimer($breakTime, $sessionTime) {
@@ -67,12 +76,34 @@ class Timer {
         const userBreakTime = breakTime * Timer.ONE_MINUTE_IN_MILLISECONDS;
         const userSessionTime = sessionTime * Timer.ONE_MINUTE_IN_MILLISECONDS;
 
-        this.timeCounter(userSessionTime, userBreakTime);
+        this._startCounter(userSessionTime, userBreakTime);
+    }
+
+    updateTimerControl(date) {
+        const $timer = document.querySelector('#timer');
+        $timer.textContent = this.formatTime(date);
+    }
+
+    toggleCountLabel() {
+        const $item = document.querySelector('#ele');
+        $item.textContent = (whatIsCounted.textContent === 'session') ? 'break' : 'session';
+    }
+
+    formatTime(date) {
+        const minutes = String(date.getMinutes());
+        const seconds = String(date.getSeconds());
+        const TWO_DIGITS = 2;
+        const PREFIX = 0;
+        const minutesWithZero = minutes.padStart(TWO_DIGITS, PREFIX);
+        const secondsWithZero = seconds.padStart(TWO_DIGITS, PREFIX);
+
+        return `${minutesWithZero}:${secondsWithZero}`;
     }
 
 }
 
 Timer.ONE_MINUTE_IN_MILLISECONDS = 60000;
+Timer.ONE_SECOND = 1000;
 
 
 if (typeof module === 'object' && module.exports) {
