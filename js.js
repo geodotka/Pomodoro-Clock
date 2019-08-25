@@ -1,20 +1,20 @@
 // ----------------- decrease timer by 1 minute
-const minusBttns = document.getElementsByClassName('minus');
-for (i = 0; i < minusBttns.length; i++) {
-    minusBttns[i].addEventListener('click', minusFunc);
+const $minusButtons = document.getElementsByClassName('minus');
+for (i = 0; i < $minusButtons.length; i++) {
+    $minusButtons[i].addEventListener('click', minusFunc);
 }
 
 
 // ----------------- increase timer by 1 minute
-const plusBttns = document.getElementsByClassName('plus');
-for (i = 0; i < plusBttns.length; i++) {
-    plusBttns[i].addEventListener('click', plusFunc);
+const $plusButtons = document.getElementsByClassName('plus');
+for (i = 0; i < $plusButtons.length; i++) {
+    $plusButtons[i].addEventListener('click', plusFunc);
 }
 
 
 // -------------- timer countdown
 // 1 minuta = 60 000 milisekund
 // 1 sekunda = 1000 milisekund
-//const intervalID = window.setInterval(function, 1000)
+// const intervalID = window.setInterval(function, 1000)
 const clockCount = document.getElementById('wholeClock')
     .addEventListener('click', timerOn);
