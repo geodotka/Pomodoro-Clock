@@ -2,14 +2,22 @@ function main() {
     // ----------------- decrease timer by 1 minute
     const $minusButtons = document.getElementsByClassName('minus');
     for (let i = 0; i < $minusButtons.length; i++) {
-        $minusButtons[i].addEventListener('click', minusFunc);
+        $minusButtons[i].addEventListener('click', function () {
+            const $item = document.getElementById(this.id);
+            const $sibling = $item.nextSibling.nextSibling; // DOMElement
+            decreaseElementNumber($sibling);
+        });
     }
 
 
     // ----------------- increase timer by 1 minute
     const $plusButtons = document.getElementsByClassName('plus');
     for (i = 0; i < $plusButtons.length; i++) {
-        $plusButtons[i].addEventListener('click', plusFunc);
+        $plusButtons[i].addEventListener('click', function () {
+            const $item = document.getElementById(this.id);
+            const $sibling = $item.previousSibling.previousSibling; // DOMElement
+            increaseElementNumber($sibling);
+        });
     }
 
 

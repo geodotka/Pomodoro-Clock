@@ -1,31 +1,25 @@
 const MINIMUM_CLOCK_VALUE = 0;
 const MAXIMUM_CLOCK_VALUE = 60;
 
-function minusFunc() {
-    const $item = document.getElementById(this.id);
-    const $sibling = $item.nextSibling.nextSibling; // DOMElement
-
-    let currentTime = Number($sibling.textContent);
-    if (currentTime === MINIMUM_CLOCK_VALUE) {
+function decreaseElementNumber($element) {
+    let currentTime = Number($element.textContent);
+    if (currentTime <= MINIMUM_CLOCK_VALUE) {
         currentTime = MINIMUM_CLOCK_VALUE;
     } else {
         currentTime--;
     }
-    $sibling.textContent = String(currentTime);
+    $element.textContent = String(currentTime);
 }
 
 
-function plusFunc() {
-    const $item = document.getElementById(this.id);
-    const $sibling = $item.previousSibling.previousSibling; // DOMElement
-
-    let currentTime = Number($sibling.textContent);
+function increaseElementNumber($element) {
+    let currentTime = Number($element.textContent);
     if (currentTime < MAXIMUM_CLOCK_VALUE) {
         currentTime++;
     } else {
         currentTime = MAXIMUM_CLOCK_VALUE;
     }
-    $sibling.textContent = String(currentTime);
+    $element.textContent = String(currentTime);
 }
 
 
@@ -66,4 +60,14 @@ function timerOn() {
     const userSessionTime = Number(document.getElementById('sessionTime').innerText) * 60000;
     document.getElementById('ele').textContent = 'session';
     timeCounter(userSessionTime, userBreakTime);
+}
+
+
+if (typeof module === 'object' && module.exports) {
+    module.exports = {
+        decreaseElementNumber,
+        increaseElementNumber,
+        timeCounter,
+        timerOn
+    };
 }
